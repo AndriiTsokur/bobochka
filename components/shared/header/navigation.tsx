@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { ShoppingCart, UserIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ModeToggle from './mode-toggle';
+import UserButton from './user-button';
 
 const Navigation = () => {
 	return (
@@ -14,11 +15,7 @@ const Navigation = () => {
 				</Link>
 			</Button>
 
-			<Button asChild>
-				<Link href='/sign-in'>
-					<UserIcon /> Sign In
-				</Link>
-			</Button>
+			<UserButton />
 		</>
 	);
 };
