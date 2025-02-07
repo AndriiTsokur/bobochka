@@ -38,13 +38,22 @@ export async function signOutUser() {
 // Sign up user
 export async function signUpUser(prevState: unknown, formData: FormData) {
 	try {
-		const user = signUpFormSchema.parse({
+		const validatedFields = signUpFormSchema.safeParse({
 			name: formData.get('name'),
 			email: formData.get('email'),
 			password: formData.get('password'),
 			confirmPassword: formData.get('confirmPassword'),
 		});
 
+		if (!validatedFields.success) {
+			return {
+				sucess: false,
+				message: formatError(validatedFields.error),
+				formData: Object.fromEntries(formData),
+			};
+		}
+
+		const user = validatedFields.data;
 		const plainPassword = user.password;
 		user.password = hashSync(user.password, 10);
 
@@ -67,6 +76,10 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
 			throw error;
 		}
 
-		return { success: false, message: formatError(error) };
+		return {
+			success: false,
+			message: formatError(error),
+			formData: Object.fromEntries(formData),
+		};
 	}
 }
