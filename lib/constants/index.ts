@@ -21,3 +21,9 @@ export const signUpDefaultValues = {
 	password: '',
 	confirmPassword: '',
 };
+
+export const PRICES = {
+	freeShipping: 100,
+	shipping: 10,
+	tax: 0.15,
+};
